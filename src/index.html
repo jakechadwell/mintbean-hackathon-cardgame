@@ -12,71 +12,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="body">
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-brain"></i>
-                Card-Matching Memory Game
-                <i class="fas fa-brain"></i>
-            </a>
+    <nav class="navbar bg-light2 navbar border-secondary" style="padding-right: 8px">
+        <a class="navbar-brand hover" href="#"><i class="fas fa-fish"></i>Go-Fish Card Game</a>
+         <div id="navbar-links" class= "nav-item active">
+            <a class="nav-item hover nav-a" href="pages/about.html">About</a>
+            <a class="nav-item hover nav-a" href="pages/rules.html">Documentation</a>
+            <a class="nav-item hover nav-a" href="pages/main.html">Play</a>
         </div>
     </nav>
-    <hr>
-    <section class="memory-game">
-        <div class="memory-card" data-name="angular">
-            <img class="front-face" src="static/images/angular.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="angular">
-            <img class="front-face" src="static/images/angular.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="aurelia">
-            <img class="front-face" src="static/images/aurelia.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="aurelia">
-            <img class="front-face" src="static/images/aurelia.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="backbone">
-            <img class="front-face" src="static/images/backbone.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="backbone">
-            <img class="front-face" src="static/images/backbone.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="ember">
-            <img class="front-face" src="static/images/ember.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="ember">
-            <img class="front-face" src="static/images/ember.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="react">
-            <img class="front-face" src="static/images/react.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="react">
-            <img class="front-face" src="static/images/react.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="vue">
-            <img class="front-face" src="static/images/vue.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-        <div class="memory-card" data-name="vue">
-            <img class="front-face" src="static/images/vue.svg" alt="icon">
-            <img class="back-face" src="static/images/js-badge.svg" alt="icon">
-        </div>
-    </section>
-
-    <button type="button" id="reset-btn" class="btn">Click to Reset the Board</button>
-</div>
+    <div class="body">
+        <svg class="wave-top" width="100" viewBox="0 0 1200 250">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 108.306L50 114.323C100 120.34 200 132.374 300 168.476C400 204.578 500 264.749 600 246.698C700 228.647 800 132.374 900 108.306C1000 84.2382 1100 132.374 1150 156.442L1200 180.51V-8.5451e-06H1150C1100 -8.5451e-06 1000 -8.5451e-06 900 -8.5451e-06C800 -8.5451e-06 700 -8.5451e-06 600 -8.5451e-06C500 -8.5451e-06 400 -8.5451e-06 300 -8.5451e-06C200 -8.5451e-06 100 -8.5451e-06 50 -8.5451e-06H0V108.306Z" fill="#0099FF"/>
+        </svg>
+    </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script src="anime.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
