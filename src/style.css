@@ -17,7 +17,9 @@ html, body {
 
 h1 {
   position: relative;
-  z-index: 10
+  z-index: 10;
+  transform: translate(0px, 400px) scale(1.5);
+  font-weight: 800;
 }
 
 a {
@@ -58,10 +60,23 @@ nav a:hover {
   margin-right: .5em;
 }
 
+.nav-a:hover {
+  color: #FFE37B;
+  text-decoration: none;
+  transform: scale(1.1);
+  transition-timing-function: ease-in-out;
+  transition: .1s;
+}
+
 .border-bottom{
   border-bottom: 1px solid aliceblue!important;
 }
 
 i {
   margin-right: .5em;
+}
+
+p {
+  position: relative;
+  z-index: 10;
 }
