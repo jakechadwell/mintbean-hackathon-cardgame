@@ -18,8 +18,9 @@ html, body {
 h1 {
   position: relative;
   z-index: 10;
-  transform: translate(0px, 400px) scale(1.5);
+  transform: scale(1.5);
   font-weight: 800;
+  color: white;
 }
 
 a {
@@ -80,3 +81,53 @@ p {
   position: relative;
   z-index: 10;
 }
+
+.welcome-header {
+  margin-top: 10em;
+}
+
+.about-header {
+  text-align: center;
+}
+
+#about {
+  margin-top: 40em;
+  padding-bottom: 10em;
+}
+
+p {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3em;
+  color: #FFE37B;
+  text-align: center;
+  font-weight: 800;
+  max-width: 70%;
+  padding-left: 7em;
+  padding-right: 7em;
+}
+
+.arrow {
+  color: #FFE37B;
+  transform: scale(2.5);
+  margin-top: 1em;
+}
+
+.a-arrow {
+  margin-left: 50%;
+}
+
+.github {
+  margin-bottom: 20em;
+  margin-left: 45em;
+  padding-top: 3em;
+  color: #FFE37B;
+  text-align: center;
+  font-weight: 800;
+  max-width: 70%;
+  padding-left: 7em;
+  padding-right: 7em;
+  padding-bottom: 25em;
+}
+
+
