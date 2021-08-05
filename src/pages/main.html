@@ -20,11 +20,63 @@
         <a class="nav-item nav-a" href="main.html">Play</a>
     </div>
 </nav>
+
 <section id="welcome" class="body">
     <svg class="wave-top" width="100" viewBox="0 0 1200 250">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 108.306L50 114.323C100 120.34 200 132.374 300 168.476C400 204.578 500 264.749 600 246.698C700 228.647 800 132.374 900 108.306C1000 84.2382 1100 132.374 1150 156.442L1200 180.51V-8.5451e-06H1150C1100 -8.5451e-06 1000 -8.5451e-06 900 -8.5451e-06C800 -8.5451e-06 700 -8.5451e-06 600 -8.5451e-06C500 -8.5451e-06 400 -8.5451e-06 300 -8.5451e-06C200 -8.5451e-06 100 -8.5451e-06 50 -8.5451e-06H0V108.306Z" fill="#0099FF"/>
     </svg>
+    <div class="container game-board">
+        <div class="center">
+            <h1 class="go-fish-header">Go Fish!</h1>
+            <div class="center search">
+                <div class="tracker">
+                    <h5>Fishing For:</h5>
+                    <h2 id="searchValue"></h2>
+                </div>
+                <div class="tracker">
+                    <h5>Fishing From:</h5>
+                    <h2 id="searchPlayer"></h2>
+                </div>
+                <div class="tracker">
+                    <h5>Sets:</h5>
+                    <h2 id="humanSets">0</h2>
+                </div>
+                <div class="tracker">
+                    <h5>Cards Remaining:</h5>
+                    <h2 id="deckSize">0</h2>
+                </div>
+            </div>
+            <h4 id="playerInfo">Here is where you will see a breakdown of your last turn</h4>
+            <button id="startButton" class="btn" type="button">Start Game</button>
+            <button id="continue" class="btn" type="button">Take Turn</button>
+        </div>
+
+        <div class="center">
+            <h2>Your Opponents</h2>
+            <div class="" id="opponentContainer">
+
+            </div>
+        </div>
+
+        <div class="center">
+            <h2>Your Cards</h2>
+            <div class="center" id="cardContainer">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+                <img class="card" src="../static/img/back.png" alt="A card">
+            </div>
+        </div>
+    </div>
+
 </section>
+
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <script src="../anime.min.js"></script>
