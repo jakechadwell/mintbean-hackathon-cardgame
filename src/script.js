@@ -20,41 +20,6 @@ anime({
   ],
 });
 
-
-function Card(pip, suit) {
-    this.pip = pip;
-    this.suit = suit;
-
-    this.toString = function () {
-        return this.pip + ' ' + this.suit;
-    };
-}
-
-function Deck() {
-    var pips = '2 3 4 5 6 7 8 9 10 Jack Queen King Ace'.split(' ');
-    var suits = 'Clubs Hearts Spades Diamonds'.split(' ');
-    this.deck = [];
-    for (var i = 0; i < suits.length; i++)
-        for (var j = 0; j < pips.length; j++)
-            this.deck.push(new Card(pips[j], suits[i]));
-
-    this.toString = function () {
-        return '[' + this.deck.join(', ') + ']';
-    };
-
-    this.shuffle = function () {
-        for (var i = 0; i < this.deck.length; i++)
-            this.deck[i] = this.deck.splice(
-                parseInt(this.deck.length * Math.random()), 1, this.deck[i])[0];
-    };
-
-    this.deal = function () {
-        return this.deck.shift();
-    };
-}
-
-
-
 var gameActive = false;
 var dealer;
 var searchValue = "x";
@@ -72,11 +37,8 @@ $(document).ready(function () {
 });
 
 function buttonPress() {
-  // var element = document.getElementById("sven");
-  // var playDeck = new Deck();
   if(!gameActive) {
     dealer = new Dealer(requestPlayers());
-    sounds = new Sounds();
     gameActive = true;
     alert("Hands dealt, ready to play.\n Click to begin.");
   }
@@ -124,32 +86,26 @@ function resetSearchValues() {
   searchPlayer = "x";
 }
 
-// Gameplay cycle runs here after setup
 function playGame(playerInputValue, playerInputOpponent) {
   if(playerInputValue === "x" || playerInputOpponent === "x") {
     $("playerInfo").html("Select opponent and card value to fish!");
     return;
   }
 
-  // For each player:
   for (var i = 0; i < dealer.players.length; i++) {
     var playerTakingTurn = dealer.players[i];
 
     var canTakeTurn = playerTakingTurn.takeTurn();
 
-    // Overrides autoplay with human interraction
     if (canTakeTurn === 2) {
       if(playerTakingTurn.getHand() > 1) {
-        // If player cannot draw a card because deck is empty
         if(!dealer.dealCard(playerTakingTurn)) {
-          // Skip player, there is nothing else they can do
           $("#playerInfo").html("Deck is empty. Please continue to end.")
           $("#continue").html("Continue");
           continue;
         }
       }
 
-      // Switch value to int (collected as string from image)
       var valueToSearch = parseInt(playerInputValue);
       var opponentToSearch = dealer.players[playerInputOpponent];
       instigateCall(valueToSearch, opponentToSearch, playerTakingTurn);
@@ -161,24 +117,13 @@ function playGame(playerInputValue, playerInputOpponent) {
       continue;
     }
 
-    // If the player has no cards, draw a card
     if(canTakeTurn === 0) {
-      // If player cannot draw a card because deck is empty
       if(!dealer.dealCard(playerTakingTurn)) {
-        // Skip player, there is nothing else they can do
         continue;
       }
-    // Else pick a card and player to fish
     } else {
-      // An array containing:
-      // [0] = direct reference to a card
-      // [1] = index of a player
       var cardAndPlayerInt = playerTakingTurn.callCardAndPlayer(dealer.players.length);
-
-      // Card value
       var cardToFind = cardAndPlayerInt[0].value;
-
-      // Direct reference to a player (from index)
       var playerToFish = dealer.players[cardAndPlayerInt[1]];
 
       instigateCall(cardToFind, playerToFish, playerTakingTurn);
@@ -212,19 +157,12 @@ function playGame(playerInputValue, playerInputOpponent) {
 }
 
 function instigateCall(cardToFind, playerToFish, playerTakingTurn) {
-  // Array of index values point to search matches
   var matchingValueIndicies = dealer.findCardInPlayer(cardToFind, playerToFish);
-
-  // If no matches
   if(matchingValueIndicies.length < 1) {
-    // If player cannot draw a card because deck is empty
     if(!dealer.dealCard(playerTakingTurn)) {
-      // Skip player, there is nothing else they can do
     }
-    // continue;
   }
 
-  // Cards to pass to fishing player
   var cardsToPass = playerToFish.removeCards(matchingValueIndicies);
   for (var j = 0; j < cardsToPass.length; j++) {
     playerTakingTurn.addCard(cardsToPass[j]);
@@ -270,7 +208,6 @@ function instigateCall(cardToFind, playerToFish, playerTakingTurn) {
   }
 }
 
-// Get number of players
 function requestPlayers() {
   do {
     var players = prompt("Choose a number of players, between 2 and 7!");
@@ -279,7 +216,6 @@ function requestPlayers() {
   return players;
 }
 
-// Manages cards
 class Deck {
   constructor() {
     this.deck = [];
@@ -287,31 +223,15 @@ class Deck {
     this.printDeck();
   }
 
-  // Build and shuffle standard deck of 52 cards
   initialise() {
     const SUITS_QUANTITY = 4;
     const SUIT_SIZE = 13;
-
     var suits = [4,3,2,1];
-
-    // Build a sorted deck in suits descending order - S,H,C,D
     for(var i = 0; i < SUITS_QUANTITY; i++) {
       for(var j = 0; j < SUIT_SIZE; j++) {
-
-        /*
-        Objects are passed by reference in JS, therefore duplicating the global variable 'card' and editing it edits ALL deriviatives of card.
-        Thus creating a deck of cards that are ALL THE SAME!
-        Therefore variable must be instantiated each time.
-        CAN YOU TELL I SPENT A LONG TIME WORKING THIS OUT?!?
-        */
-
-        // Template for each card
         var card = {suit: 0, value: 0, image: ""};
-
         card.suit = suits[i];
         card.value = (j+1);
-        // Apply reference to corresponding card image:
-        // ../images/cardsjpg/card.image.jpg
         var imageRef = "";
         switch (card.value) {
           case 11:
@@ -346,27 +266,19 @@ class Deck {
           default:
             imageRef += "HELP I DON'T HAVE A SUIT!"
         }
-        card.image = "../images/cardsjpg/" + imageRef + ".jpg";
+        card.image = "../static/img/" + imageRef + ".jpg";
         this.deck.push(card);
       }
     }
     this.shuffleDeck();
   }
 
-  // Could randomly grab a single card from the deck rather than suffle
-  // BUT a shuffled deck allows for reusable code in other card games
   shuffleDeck() {
 
-    // Shuffles using the Fisher-Yates method, an 'in-place, O(n) algorithm'
     var m = this.deck.length, t, i;
 
-    // While there remain elements to shuffle…
     while (m) {
-
-      // Pick a remaining element…
       i = Math.floor(Math.random() * m--);
-
-      // And swap it with the current element.
       t = this.deck[m];
       this.deck[m] = this.deck[i];
       this.deck[i] = t;
@@ -384,31 +296,19 @@ class Deck {
   }
 }
 
-// Manages interractions between deck and players
 class Dealer {
   constructor(players) {
-    // Number of players
     this.playerCount = players;
-    // Array of players
     this.players = [];
-
-    // Can't play by yourself
     this.MIN_PLAYERS = 2;
-    // Number of players necessary for 5 cards rather than 7 to be dealt
     this.DEAL_THRESHOLD = 4
-    // Max 7 players for now (technically 10 can play)
     this.MAX_PLAYERS = 7;
-
-    // The deck for this game
     this.playDeck = new Deck();
-
     this.createPlayers();
     this.dealHands();
   }
 
-  // Create necessary number of player objects
   createPlayers () {
-    // Create player class for each player
     $("#opponentContainer").empty();
     for (var i = 0; i < this.playerCount; i++) {
       var newPlayer = new Player();
@@ -417,14 +317,13 @@ class Dealer {
         newPlayer.setHuman();
       } else {
         var opponentNumber = i;
-        $("#opponentContainer").append("<div class=\"opponent\" number=\"" + opponentNumber + "\">\n<button class=\"\" type=\"button\">Opponent " + opponentNumber + "</button>\n<h5>Sets:</h5>\n<h3 class=\"opponentSets\">0</h3>\n<h5 class=\"actionExplain\">==========</h5>\n</div>");
+        $("#opponentContainer").append("<div class=\"opponent\" number=\"" + opponentNumber + "\">\n<button class=\"btn\" type=\"button\">Opponent " + opponentNumber + "</button>\n<h5>Sets:</h5>\n<h3 class=\"opponentSets\">0</h3>\n</div>");
       }
       this.players.push(newPlayer);
     }
     this.playerNum = this.players.length;
   }
 
-  // Deal hand of correct size to each player
   dealHands () {
     var toDeal = 0;
     if (this.playerCount >= this.MIN_PLAYERS && this.playerCount < this.DEAL_THRESHOLD) {
@@ -442,13 +341,8 @@ class Dealer {
         this.dealCard(this.players[j]);
       }
     }
-    //
-    // for (var i = 0; i < this.players.length; i++) {
-    //   console.log(this.players[i].getHand());
-    // }
   }
 
-  // Send a single card from the deck to a player
   dealCard (player) {
     if(this.playDeck.deck.length < 1) {
       return false
@@ -458,29 +352,20 @@ class Dealer {
     return true;
   }
 
-  // TAKE a card value and a player
-  // RETURN array of matching cards
-  findCardInPlayer(card, opponent) {
+    findCardInPlayer(card, opponent) {
     var cardsOfMatchingValue = [];
-    // For each card in oppenent's hand
     for (var i = 0; i < opponent.hand.length; i++) {
-      // If card value matches value searched for
       if(opponent.hand[i].value === card) {
-        // Add index to cardsOfMatchingValue
         cardsOfMatchingValue.push(i);
       }
     }
     return cardsOfMatchingValue;
   }
 
-  // Returns a card from the deck
   getCardFromDeck() {
     return this.playDeck.getCard();
   }
 
-  // Checks if all sets are down
-  // If true
-  // Player with most sets wins
   checkWinCondition () {
     var totalSets = 0;
     for (var i = 0; i < this.players.length; i++) {
@@ -492,36 +377,26 @@ class Dealer {
     }
     return true;
   }
-
-  // Returns length of players array
   getPlayersLength() {
     return this.players.length;
   }
 }
 
-// The players
 class Player {
   constructor () {
-    // Player id (index 1)
     this.id = 0;
-    // Array of cards in hand
     this.hand = [];
-    // Is this player controlled by a human?
     this.human = false;
-    // An array of the sets a player has
     this.sets = [];
-    // Human controller
     this.humanController;
   }
 
-  // Add card to hand
   addCard (card) {
     this.hand.push(card);
     this.sortHand();
     this.checkHand();
   }
 
-  // Returns player hand
   getHand () {
     return this.hand;
   }
@@ -531,21 +406,11 @@ class Player {
     this.humanController = new Human(this);
   }
 
-  // TAKES array of index values for cards to remove
-  // Removes cards from hand by interating from end to beginning
-  // This avoids incorrect references after splice
-  // RETURN the removed cards
   removeCards (indexArray) {
     var removedCards = [];
     for (var i = (indexArray.length - 1); i >= 0; i--) {
-
-      // Capture card in singlecard variable
       var singleCard = this.hand[indexArray[i]];
-
-      // Delete card from array
       this.hand.splice(indexArray[i], 1);
-
-      // Push singleCard to removedCards array
       removedCards.push(singleCard);
     }
 
@@ -553,12 +418,10 @@ class Player {
       this.humanController.populateCardContainer(this.getHand());
     }
 
-    // Checks hand again to ensure there are cards still in hand
     this.checkHand();
     return removedCards;
   }
 
-  // If hand empty, get card ELSE call a card
   takeTurn () {
     if(this.human) {
       if(this.hand.length < 1) {
@@ -576,12 +439,7 @@ class Player {
     }
   }
 
-  // Takes: total number of players from Dealer
-  // Returns:
-  // A card to find
-  // An integer value for the player to 'fish' from
   callCardAndPlayer (playerTot) {
-    // Randomly generated values for the player and card value being fished
     do {
       var rand1 = Math.floor(Math.random() * this.hand.length);
       var rand2 = Math.floor(Math.random() * playerTot);
@@ -590,7 +448,6 @@ class Player {
     return [this.hand[rand1], rand2];
   }
 
-  // Organise hand S,H,C,D, value ascending
   sortHand () {
     this.hand.sort(function (a,b) {return a.value - b.value});
 
@@ -599,7 +456,6 @@ class Player {
     }
   }
 
-  // Checks this player's hand for any sets
   checkHand() {
     var currentValue = 0;
     var valueCount = 1;
@@ -610,7 +466,6 @@ class Player {
       this.humanController.fullHand();
     }
 
-    // Checks for sets of 4
     for (var i = 0; i < this.hand.length; i++) {
       if (this.hand[i].value !== currentValue) {
         currentValue = this.hand[i].value;
@@ -619,20 +474,15 @@ class Player {
         valueCount++;
       }
 
-      // If 4 matching values are FOUND
-      // Removes the latest value, and the 3 preceding
-      // This works because the deck is always sorted
       if(valueCount === 4) {
         var set = this.hand[i].value;
         this.playSet(set);
 
-        // Remove set from hand
         this.removeCards([i-3, i-2, i-1, i]);
       }
     }
   }
 
-  // TAKES a complete set
   playSet(set) {
     this.sets.push(set);
     this.updateSetsUI();
@@ -696,7 +546,6 @@ class Player {
   }
 }
 
-// Human
 class Human {
   constructor() {
     this.cardContainer;
@@ -735,5 +584,3 @@ class Human {
     searchPlayer = "x";
   }
 }
-
-

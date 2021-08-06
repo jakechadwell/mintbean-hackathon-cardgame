@@ -229,3 +229,22 @@ button {
 #startButton {
   margin-right: 1em;
 }
+
+.hr-line {
+  background-color: #FFE37B;
+}
+
+.rules {
+  z-index: 20;
+}
+
+.rules-list {
+  margin-top: 20em;
+  font-weight: 800;
+  font-size: larger;
+}
+
+.rules-header {
+  margin-top: 1em;
+  font-weight: 800;
+}
