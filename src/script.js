@@ -94,7 +94,6 @@ function playGame(playerInputValue, playerInputOpponent) {
 
   for (var i = 0; i < dealer.players.length; i++) {
     var playerTakingTurn = dealer.players[i];
-
     var canTakeTurn = playerTakingTurn.takeTurn();
 
     if (canTakeTurn === 2) {
