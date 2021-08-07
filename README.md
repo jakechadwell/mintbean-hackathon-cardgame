@@ -1,6 +1,6 @@
 # Mintbean Hackathon Go Fish Game
 
-[Go Fish](htttps://jakechadwell.github.io/mintbean-hackathon-cardgame) is a front end entry into the Mint Bean Hiring Hackathon. It was created using Javascript, Jquery, Bootstrap, HTML, and CSS.
+[Go Fish](htttps://jakechadwell.github.io/mintbean-hackathon-cardgame/src/index.html) is a front end entry into the Mint Bean Hiring Hackathon. It was created using Javascript, Jquery, Bootstrap, HTML, and CSS.
 
 ## Libraries Used
 
